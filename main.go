@@ -1,18 +1,52 @@
 package main
 
 import (
-    "./controllers"
-    "github.com/gorilla/mux"
-    "log"
-    "net/http"
+    "encoding/json"
+
+    "github.com/aws/aws-lambda-go/events"
+    "github.com/aws/aws-lambda-go/lambda"
 )
 
-func main() {
-    router := mux.NewRouter()
-    router.HandleFunc("/v1/person", controllers.CreatePerson).Methods("POST")
-    router.HandleFunc("/v1/person", controllers.GetPeople).Methods("GET")
-    router.HandleFunc("/v1/person/{id}", controllers.GetPerson).Methods("GET")
-    router.HandleFunc("/v1/person/{id}", controllers.DeletePerson).Methods("DELETE")
+var movies = []struct {
+    ID int `json:"id"`
+    Name string `json:"name"`
+}{
+    {
+        ID: 1,
+        Name: "Avengers",
+    },
+    {
+        ID: 2,
+        Name: "Ant-Man",
+    },
+    {
+        ID: 3,
+        Name: "Thor",
+    },
+    {
+        ID: 4,
+        Name: "Hulk",
+    }, {
+        ID: 5,
+        Name: "Doctor Strange",
+    },
+}
 
-    log.Fatal(http.ListenAndServe(":8000", router))
+func findAll() (events.APIGatewayProxyResponse, error) {
+    response, err := json.Marshal(movies)
+    if err != nil {
+        return events.APIGatewayProxyResponse{}, err
+    }
+
+    return events.APIGatewayProxyResponse{
+        StatusCode: 200,
+        Headers: map[string]string{
+            "Content-Type": "application/json",
+        },
+        Body: string(response),
+    }, nil
+}
+
+func main() {
+    lambda.Start(findAll)
 }
