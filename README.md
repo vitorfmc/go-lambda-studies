@@ -28,3 +28,4 @@ This project was build following the instructions and documentations provided by
 - https://medium.com/@rafaelacioly/construindo-uma-api-restful-com-go-d6007e4faff6 (Last visited in: 29/07/2019)
 - https://medium.com/@adigunhammedolalekan/build-and-deploy-a-secure-rest-api-with-go-postgresql-jwt-and-gorm-6fadf3da505b (Last visited in: 29/07/2019)
 - https://www.thepolyglotdeveloper.com/2019/02/developing-restful-api-golang-mongodb-nosql-database/ (Last visited in: 29/07/2019)
+- https://www.javacodegeeks.com/2018/11/build-restful-api-go-using-aws-lambda.html (Last visited in: 29/07/2019)
