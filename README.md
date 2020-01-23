@@ -1,26 +1,36 @@
 # GO REST API Example
-This is a example of REST API using GO
+This project has some examples of Go Codes to use as AWS Lambda functions
 
 ## 1. Architecture
 This example uses the following technologies:
 - Go
-- Postgresql
 
-Frameworks used:
-- gorilla/mux
-- go.mongodb.org/mongo-driver
+Other Keywords:
+- AWS RDS;
+- AWS DynamoDB;
+- AWS SES;
+- AWS Api Gateway;
 
-## 2. Installing amd running
+## 2. Generating de zip to upload into AWS Lambda:
 1. Please follow the steps provided by Go Official page to install Go: https://golang.org/doc/install?download=go1.12.7.linux-amd64.tar.gz
-2. Inside project folder run the command: 
+2. For every '.go' file inside lambdas folder run the 'get command' to get the dependencies. Example.: For 'apiGatewayLambda.go' run the following commands:
+    
     ```
     go get github.com/gorilla/mux
     go get go.mongodb.org/mongo-driver
     ```
+
 3. Inside project folder run the command to run the project:
+    
     ```
-    go build && ./go-rest-api-case
+    GOOS=linux GOARCH=amd64 go build -o main apiGatewayLambda.go
+    zip deployment.zip main
+    rm main
     ```
+    
+    **Obs.:** The deployment commands can be executed throw the 'deploymentScript.sh' file too.
+
+4. Upload de zip file at AWS Lambda;
 
 ## 3. References
 This project was build following the instructions and documentations provided by this pages:
