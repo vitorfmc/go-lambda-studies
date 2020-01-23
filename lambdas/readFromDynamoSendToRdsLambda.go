@@ -55,16 +55,17 @@ func handleRequest(ctx context.Context, e events.DynamoDBEvent) {
 
 			SQLStatement := "insert into client(name,email) values ('" + client.Name + "','" + client.Email + "');"
 			fmt.Println("statement:", SQLStatement)
-		
+			
+			// The SecretArn is generate when you create a secret for db admin user at 'AWS Secrets Manager' 
 			req, resp := rdsdataservice_client.ExecuteStatementRequest(&rdsdataservice.ExecuteStatementInput{
-				Database:    aws.String("client"),
-				ResourceArn: aws.String("arn:aws:rds:us-east-1:595223775479:cluster:testdb"),
-				SecretArn:   aws.String("arn:aws:secretsmanager:us-east-1:595223775479:secret:rds-db-credentials/cluster-DKYGVZQ7LDABC5HUTQERBFTWO4/superadmin-lALlHn"),
+				Database:    aws.String("TABLE_NAME"),
+				ResourceArn: aws.String("DATABASE_ARN"),
+				SecretArn:   aws.String("ADMIN_USER_SECRET_ARN"),
 				Sql:         aws.String(SQLStatement),
 			})
 		
 			err1 := req.Send()
-			if err1 == nil { // resp is now filled
+			if err1 == nil { 
 				fmt.Println("Response:", resp)
 			} else {
 				fmt.Println("error:", err1)
